@@ -1,0 +1,11 @@
+Как закомитеть изменения:
+	
+	1) git add -A
+
+	2) git commit -m "Comment"
+
+	3) git push origin master
+
+Если в первый раз то надо подключиться к репозиторию
+
+	git remote add origin https://github.com/NOLedCorp/LuckyJump.git
