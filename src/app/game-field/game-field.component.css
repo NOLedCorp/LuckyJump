@@ -1,0 +1,41 @@
+.field{
+    width: 950px;
+    overflow-x: hidden;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: rgb(185, 241, 185); 
+    cursor: pointer;
+}
+.field>span{
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    z-index: 1000;
+    color: rgba(41, 41, 41, 0.521);
+}
+.ball{
+    position: absolute;
+    left: 200px;
+    top: 215px;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    background-color: rgb(99, 99, 247);
+}
+.ring{
+    background-color: yellow;
+    height: 40px;
+    width: 300px;
+    border-radius: 50%;
+    position: absolute;
+    right: 10px;
+}
+.ring-small{
+    background-color: rgb(185, 241, 185);
+    height: 20px;
+    width: 250px;
+    right: 35px;
+}
