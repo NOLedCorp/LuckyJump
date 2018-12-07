@@ -2,5 +2,5 @@
   <span>{{score}}</span>
   <div style="top:230px" class="ball" #ball></div>
   <!-- <div class="ring" [ngStyle]="{'right' : ringRight + 'px'}"></div> -->
-  <div class="ring ring-small" [ngStyle]="{'right' : ringSmallRight + 'px'}"></div>
+  <div class="ring ring-small" [ngClass]="{'scored':scored}" [ngStyle]="{'right' : ringSmallRight + 'px'}"></div>
 </div>
