@@ -17,36 +17,36 @@ export class GameFieldComponent implements OnInit {
   ngOnInit() {
     var c = this;
     this.timerRing = setInterval(function(this){
-      c.ringRight+=1;
       c.ringSmallRight+=1;
-      if(c.ringRight>950){
-        c.ringRight=-300;
-        c.ringSmallRight=-275;
+      if(c.ringSmallRight>950){
+        c.ringSmallRight=-250;
       }
     }, 10)
   }
 
-  fall(ball:HTMLDivElement){
+  fall(ball:HTMLDivElement, ctrl:any){
     var start = Number(ball.style.top.replace('px',""));
     console.log(ball.style.top);
     this.timerFall = setInterval(function() {
-      // вычислить сколько времени прошло с начала анимации
       var timePassed = Math.abs(Number(ball.style.top.replace('px',"")) - start);
 
       
-      if (Number(ball.style.top.replace('px',""))>=430) {
-        clearInterval(this.timerFall); // конец через 2 секунды
+      if (Number(ball.style.top.replace('px',""))>=445) {
+        clearInterval(this.timerFall); 
         return;
       }
+      console.log(start);
+      console.log(ball.style.top);
 
-      // рисует состояние анимации, соответствующее времени timePassed
-      ball.style.top = Number(ball.style.top.replace('px',""))+(timePassed>150?3:1)+ 'px';
-      
+      console.log(timePassed);
+
+      ball.style.top = Number(ball.style.top.replace('px',""))+1+(timePassed==0? start / 100: timePassed / 100)+ 'px';
+      let t = Number(ball.style.top.replace('px',""))
+      if (t>230 && t<270) {
+        ctrl.score++;
+      }
 
     }, 5);
-
-// в то время как timePassed идёт от 0 до 2000
-// left принимает значения от 0 до 400px
     
   }
 
@@ -61,16 +61,16 @@ export class GameFieldComponent implements OnInit {
       var timePassed = Math.abs(Number(ball.style.top.replace('px',"")) - start);
 
       
-      if (Number(ball.style.top.replace('px',""))<=0) {
+      if (Number(ball.style.top.replace('px',""))<=10) {
         clearInterval(ctrl.timerJump);
 
          // конец через 2 секунды
         return;
       }
 
-      if (Math.abs(Number(ball.style.top.replace('px',""))-start)>200) {
+      if (Math.abs(Number(ball.style.top.replace('px',""))-start)>120) {
         clearInterval(ctrl.timerJump);
-        ctrl.fall(ball);
+        ctrl.fall(ball, ctrl);
         return;
       }
 
