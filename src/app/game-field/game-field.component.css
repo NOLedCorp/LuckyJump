@@ -41,8 +41,8 @@
 }
 .scored{
     border-color: green;
-    transition: 1s;
-    opacity: 0.3;
+    transition: 1.5s;
+    opacity: 0;
     height: 40px;
     width: 150px;
 }
