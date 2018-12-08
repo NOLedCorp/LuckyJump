@@ -1,6 +1,6 @@
 .field{
     width: 100%;
-    overflow-x: hidden;
+    overflow: hidden;
     height: 500px;
     display: flex;
     justify-content: center;
@@ -22,8 +22,8 @@
     z-index: 10;
     top: 215px;
     border-radius: 50%;
-    width: 20px;
-    height: 20px;
+    width: 35px;
+    height: 35px;
     background-color: rgb(99, 99, 247);
 }
 .ring{
@@ -41,8 +41,6 @@
 }
 .scored{
     border-color: green;
-    transition: 1.5s;
-    opacity: 0;
     height: 40px;
     width: 150px;
 }

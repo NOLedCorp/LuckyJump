@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'game-field',
@@ -14,7 +14,14 @@ export class GameFieldComponent implements OnInit {
   ringSmallRight:number = -275;
   ctrl:any = this;
   scored:boolean = false;
+  falled:boolean = false;
   constructor() { }
+  @ViewChild('ball')
+  public m:ElementRef;
+  @HostListener('document:keydown') doSth(){
+    console.log(this.m);
+    this.jump(this.m.nativeElement, this);
+  }
   ngOnInit() {
     var c = this;
     this.timerRing = setInterval(function(this){
@@ -26,25 +33,29 @@ export class GameFieldComponent implements OnInit {
     }, 10)
   }
 
-  fall(ball:HTMLDivElement, ctrl:any){
+  fall(ball:any, ctrl:any){
     var start = Number(ball.style.top.replace('px',""));
     this.timerFall = setInterval(function() {
       var timePassed = Math.abs(Number(ball.style.top.replace('px',"")) - start);
 
       
-      if (Number(ball.style.top.replace('px',""))>=445) {
+      if (Number(ball.style.top.replace('px',""))>=461) {
+        if(!ctrl.falled){
+          ctrl.jump(ball, ctrl, (Number(ball.style.top.replace('px',"")) - start)/4);
+        }
+        ctrl.score=0;
+        ctrl.falled=true;
         clearInterval(this.timerFall); 
         return;
       }
-      ball.style.top = Number(ball.style.top.replace('px',""))+0.5+(timePassed==0? start / 100: timePassed / 100)+ 'px';
+      ball.style.top = Number(ball.style.top.replace('px',""))+1+Math.pow(timePassed/100,1.4)+ 'px';
       let t = Number(ball.style.top.replace('px',""));
       let t1 = Number(ball.style.right.replace('px',""))
       if (!ctrl.scored && t>230 && t<270 && ctrl.ringSmallRight>605 && ctrl.ringSmallRight<710  ) {
         if(ctrl.ringSmallRight<615 || ctrl.ringSmallRight>700){
-          ctrl.jump(ball, ctrl);
+          ctrl.jump(ball, ctrl, (Number(ball.style.top.replace('px',"")) - start)/4);
         }
         else{
-          console.log(ctrl.ringSmallRight);
           ctrl.scored=true;
           ctrl.score++;
         }
@@ -59,9 +70,12 @@ export class GameFieldComponent implements OnInit {
   }
 
 
-  jump(ball:HTMLDivElement, ctrl:any){
+  jump(ball:any, ctrl:any, pos:number = 80){
     clearInterval(this.timerFall);
     clearInterval(this.timerJump);
+    if(ctrl.falled){
+      ctrl.falled = false;
+    }
     var start = Number(ball.style.top.replace('px',""));
      // сохранить время начала
     ctrl.timerJump = setInterval(function() {
@@ -69,21 +83,22 @@ export class GameFieldComponent implements OnInit {
       var timePassed = Math.abs(Number(ball.style.top.replace('px',"")) - start);
 
       
-      if (Number(ball.style.top.replace('px',""))<=10) {
+      if (Number(ball.style.top.replace('px',""))<=0) {
         clearInterval(ctrl.timerJump);
         ctrl.fall(ball, ctrl);
          // конец через 2 секунды
         return;
       }
-      if (timePassed>80) {
+      
+      if (timePassed>pos) {
         clearInterval(ctrl.timerJump);
         ctrl.fall(ball, ctrl);
         return;
       }
 
       // рисует состояние анимации, соответствующее времени timePassed
-      ball.style.top = Number(ball.style.top.replace('px',""))- (2-(timePassed==0? start / 50: timePassed / 50)) + 'px';
-      
+      ball.style.top = Number(ball.style.top.replace('px',""))- (2-Math.pow(timePassed/100,2)) + 'px';
+      console.log(2-Math.pow(timePassed/100,2));
 
     }, 5);
   }
