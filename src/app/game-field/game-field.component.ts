@@ -16,6 +16,7 @@ export class GameFieldComponent implements OnInit {
   ringRight:number = -300;
   ballRight:number = 700;
   ballTop:number = 230;
+  ringsTop:number = 250;
   ringSmallRight:number = -275;
   ctrl:any = this;
   scored:boolean = false;
@@ -28,6 +29,7 @@ export class GameFieldComponent implements OnInit {
     this.jump(this.m.nativeElement, this);
   }
   ngOnInit() {
+
     var c = this;
     this.timerRing = setInterval(function(this){
       c.ringSmallRight+=1;
@@ -38,7 +40,9 @@ export class GameFieldComponent implements OnInit {
     }, 10);
     this.scrWidth=window.innerWidth;
     this.scrHeight=window.innerHeight;
+    console.log(this.scrHeight/2-10);
     this.m.nativeElement.style.top=this.scrHeight/2-15 + 'px';
+    this.ringsTop = this.scrHeight/2-10;
     this.ballRight = this.scrWidth * 0.6;
   }
 
