@@ -10,7 +10,10 @@ export class GameFieldComponent implements OnInit {
   timerFall:any;
   timerJump:any;
   timerRing:any;
+  scrWidth:number=800;
+  ringWidth:number = 100;
   ringRight:number = -300;
+  ballRight:number = 700;
   ringSmallRight:number = -275;
   ctrl:any = this;
   scored:boolean = false;
@@ -26,11 +29,13 @@ export class GameFieldComponent implements OnInit {
     var c = this;
     this.timerRing = setInterval(function(this){
       c.ringSmallRight+=1;
-      if(c.ringSmallRight>950){
+      if(c.ringSmallRight>c.scrWidth+c.ringWidth){
         c.scored = false;
-        c.ringSmallRight=-250;
+        c.ringSmallRight=-c.ringWidth;
       }
-    }, 10)
+    }, 10);
+    this.scrWidth=window.innerWidth - 20;
+    this.ballRight = this.scrWidth * 0.6;
   }
 
   fall(ball:any, ctrl:any){
@@ -51,8 +56,8 @@ export class GameFieldComponent implements OnInit {
       ball.style.top = Number(ball.style.top.replace('px',""))+1+Math.pow(timePassed/100,1.4)+ 'px';
       let t = Number(ball.style.top.replace('px',""));
       let t1 = Number(ball.style.right.replace('px',""))
-      if (!ctrl.scored && t>230 && t<270 && ctrl.ringSmallRight>605 && ctrl.ringSmallRight<710  ) {
-        if(ctrl.ringSmallRight<615 || ctrl.ringSmallRight>700){
+      if (!ctrl.scored && t>230 && t<270 && ctrl.ringSmallRight>ctrl.ballRight+5-ctrl.ringWidth && ctrl.ringSmallRight<ctrl.ballRight+10  ) {
+        if(ctrl.ringSmallRight<ctrl.scrWidth+15-ctrl.ballRight || ctrl.ringSmallRight>ctrl.ballRight){
           ctrl.jump(ball, ctrl, (Number(ball.style.top.replace('px',"")) - start)/4);
         }
         else{
