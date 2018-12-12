@@ -2,5 +2,6 @@
   <span>{{score}}</span>
   <div class="ball" #ball></div>
   <!-- <div class="ring" [ngStyle]="{'right' : ringRight + 'px'}"></div> -->
-  <div class="ring ring-small" [ngClass]="{'scored':scored}" [ngStyle]="{'right' : ringSmallRight + 'px', 'width' : ringWidth + 'px'}"></div>
+  <div class="ring ring-small" [ngClass]="{'scored':scored[0]}" [ngStyle]="{'right' : ringSmallRight[0] + 'px', 'top' : ringTop[0]>0?ringTop[0]+'px':'', 'width' : ringWidth + 'px'}"></div>
+  <div class="ring ring-small" [ngClass]="{'scored':scored[1]}" [ngStyle]="{'right' : ringSmallRight[1] + 'px', 'top' : ringTop[1]>0?ringTop[1]+'px':'', 'width' : ringWidth + 'px'}"></div>
 </div>
